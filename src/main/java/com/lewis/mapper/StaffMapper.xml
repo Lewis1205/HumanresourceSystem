@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lewis.mapper.StaffMapper">
+
+	<resultMap id="BaseResultMap" type="com.lewis.pojo.Staff">
+		<id column="staff_id" property="staffId" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="num" property="num" jdbcType="VARCHAR" />
+		<result column="principle_dept" property="principleDept"
+			jdbcType="VARCHAR" />
+		<result column="senior_dept" property="seniorDept" jdbcType="VARCHAR" />
+		<result column="junior_dept" property="juniorDept" jdbcType="VARCHAR" />
+		<result column="pos_category" property="posCategory" jdbcType="VARCHAR" />
+		<result column="pos_name" property="posName" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="gender" property="gender" jdbcType="VARCHAR" />
+		<result column="Email" property="email" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="citizenship" property="citizenship" jdbcType="VARCHAR" />
+		<result column="born" property="born" jdbcType="VARCHAR" />
+		<result column="birth" property="birth" jdbcType="TIMESTAMP" />
+		<result column="nationality" property="nationality" jdbcType="VARCHAR" />
+		<result column="religion" property="religion" jdbcType="VARCHAR" />
+		<result column="politics_status" property="politicsStatus"
+			jdbcType="VARCHAR" />
+		<result column="identification" property="identification"
+			jdbcType="VARCHAR" />
+		<result column="social_insurance" property="socialInsurance"
+			jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+		<result column="education" property="education" jdbcType="VARCHAR" />
+		<result column="profession" property="profession" jdbcType="VARCHAR" />
+		<result column="standard_id" property="standardId" jdbcType="INTEGER" />
+		<result column="bank" property="bank" jdbcType="VARCHAR" />
+		<result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+		<result column="characters" property="characters" jdbcType="VARCHAR" />
+		<result column="hobby" property="hobby" jdbcType="VARCHAR" />
+		<result column="register" property="register" jdbcType="VARCHAR" />
+		<result column="register_time" property="registerTime"
+			jdbcType="TIMESTAMP" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.lewis.pojo.StaffWithBLOBs"
+		extends="BaseResultMap">
+		<result column="experience" property="experience" jdbcType="LONGVARCHAR" />
+		<result column="notes" property="notes" jdbcType="LONGVARCHAR" />
+		<result column="relationship" property="relationship" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		staff_id, status, num, principle_dept, senior_dept,
+		junior_dept, pos_category,
+		pos_name,
+		name, gender, Email, telephone, qq,
+		address, citizenship, born, birth,
+		nationality,
+		religion,
+		politics_status, identification, social_insurance, age, education,
+		profession,
+		standard_id, bank, bank_account, characters, hobby,
+		register, register_time,
+		img_url
+	</sql>
+	<sql id="Blob_Column_List">
+		experience, notes, relationship
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.lewis.pojo.StaffExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from staff
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.lewis.pojo.StaffExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from staff
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from staff
+		where staff_id = #{staffId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from staff
+		where staff_id = #{staffId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.lewis.pojo.StaffExample">
+		delete from staff
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.lewis.pojo.StaffWithBLOBs">
+		insert into staff (staff_id,
+		status, num,
+		principle_dept, senior_dept, junior_dept,
+		pos_category,
+		pos_name, name,
+		gender, Email, telephone,
+		qq, address, citizenship,
+		born, birth, nationality,
+		religion, politics_status, identification,
+		social_insurance, age, education,
+		profession, standard_id, bank,
+		bank_account, characters, hobby,
+		register, register_time, img_url,
+		experience, notes, relationship
+		)
+		values (#{staffId,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER},
+		#{num,jdbcType=VARCHAR},
+		#{principleDept,jdbcType=VARCHAR}, #{seniorDept,jdbcType=VARCHAR},
+		#{juniorDept,jdbcType=VARCHAR},
+		#{posCategory,jdbcType=VARCHAR},
+		#{posName,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{gender,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{telephone,jdbcType=VARCHAR},
+		#{qq,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{citizenship,jdbcType=VARCHAR},
+		#{born,jdbcType=VARCHAR}, #{birth,jdbcType=TIMESTAMP},
+		#{nationality,jdbcType=VARCHAR},
+		#{religion,jdbcType=VARCHAR},
+		#{politicsStatus,jdbcType=VARCHAR},
+		#{identification,jdbcType=VARCHAR},
+		#{socialInsurance,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
+		#{education,jdbcType=VARCHAR},
+		#{profession,jdbcType=VARCHAR},
+		#{standardId,jdbcType=INTEGER}, #{bank,jdbcType=VARCHAR},
+		#{bankAccount,jdbcType=VARCHAR}, #{characters,jdbcType=VARCHAR},
+		#{hobby,jdbcType=VARCHAR},
+		#{register,jdbcType=VARCHAR},
+		#{registerTime,jdbcType=TIMESTAMP}, #{imgUrl,jdbcType=VARCHAR},
+		#{experience,jdbcType=LONGVARCHAR}, #{notes,jdbcType=LONGVARCHAR},
+		#{relationship,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.lewis.pojo.StaffWithBLOBs">
+		insert into staff
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="staffId != null">
+				staff_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="principleDept != null">
+				principle_dept,
+			</if>
+			<if test="seniorDept != null">
+				senior_dept,
+			</if>
+			<if test="juniorDept != null">
+				junior_dept,
+			</if>
+			<if test="posCategory != null">
+				pos_category,
+			</if>
+			<if test="posName != null">
+				pos_name,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="email != null">
+				Email,
+			</if>
+			<if test="telephone != null">
+				telephone,
+			</if>
+			<if test="qq != null">
+				qq,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="citizenship != null">
+				citizenship,
+			</if>
+			<if test="born != null">
+				born,
+			</if>
+			<if test="birth != null">
+				birth,
+			</if>
+			<if test="nationality != null">
+				nationality,
+			</if>
+			<if test="religion != null">
+				religion,
+			</if>
+			<if test="politicsStatus != null">
+				politics_status,
+			</if>
+			<if test="identification != null">
+				identification,
+			</if>
+			<if test="socialInsurance != null">
+				social_insurance,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+			<if test="education != null">
+				education,
+			</if>
+			<if test="profession != null">
+				profession,
+			</if>
+			<if test="standardId != null">
+				standard_id,
+			</if>
+			<if test="bank != null">
+				bank,
+			</if>
+			<if test="bankAccount != null">
+				bank_account,
+			</if>
+			<if test="characters != null">
+				characters,
+			</if>
+			<if test="hobby != null">
+				hobby,
+			</if>
+			<if test="register != null">
+				register,
+			</if>
+			<if test="registerTime != null">
+				register_time,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="experience != null">
+				experience,
+			</if>
+			<if test="notes != null">
+				notes,
+			</if>
+			<if test="relationship != null">
+				relationship,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="staffId != null">
+				#{staffId,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=VARCHAR},
+			</if>
+			<if test="principleDept != null">
+				#{principleDept,jdbcType=VARCHAR},
+			</if>
+			<if test="seniorDept != null">
+				#{seniorDept,jdbcType=VARCHAR},
+			</if>
+			<if test="juniorDept != null">
+				#{juniorDept,jdbcType=VARCHAR},
+			</if>
+			<if test="posCategory != null">
+				#{posCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="posName != null">
+				#{posName,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null">
+				#{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="citizenship != null">
+				#{citizenship,jdbcType=VARCHAR},
+			</if>
+			<if test="born != null">
+				#{born,jdbcType=VARCHAR},
+			</if>
+			<if test="birth != null">
+				#{birth,jdbcType=TIMESTAMP},
+			</if>
+			<if test="nationality != null">
+				#{nationality,jdbcType=VARCHAR},
+			</if>
+			<if test="religion != null">
+				#{religion,jdbcType=VARCHAR},
+			</if>
+			<if test="politicsStatus != null">
+				#{politicsStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="identification != null">
+				#{identification,jdbcType=VARCHAR},
+			</if>
+			<if test="socialInsurance != null">
+				#{socialInsurance,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				#{age,jdbcType=INTEGER},
+			</if>
+			<if test="education != null">
+				#{education,jdbcType=VARCHAR},
+			</if>
+			<if test="profession != null">
+				#{profession,jdbcType=VARCHAR},
+			</if>
+			<if test="standardId != null">
+				#{standardId,jdbcType=INTEGER},
+			</if>
+			<if test="bank != null">
+				#{bank,jdbcType=VARCHAR},
+			</if>
+			<if test="bankAccount != null">
+				#{bankAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="characters != null">
+				#{characters,jdbcType=VARCHAR},
+			</if>
+			<if test="hobby != null">
+				#{hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="register != null">
+				#{register,jdbcType=VARCHAR},
+			</if>
+			<if test="registerTime != null">
+				#{registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="experience != null">
+				#{experience,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="notes != null">
+				#{notes,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="relationship != null">
+				#{relationship,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.lewis.pojo.StaffExample"
+		resultType="java.lang.Integer">
+		select count(*) from staff
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update staff
+		<set>
+			<if test="record.staffId != null">
+				staff_id = #{record.staffId,jdbcType=INTEGER},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.num != null">
+				num = #{record.num,jdbcType=VARCHAR},
+			</if>
+			<if test="record.principleDept != null">
+				principle_dept =
+				#{record.principleDept,jdbcType=VARCHAR},
+			</if>
+			<if test="record.seniorDept != null">
+				senior_dept = #{record.seniorDept,jdbcType=VARCHAR},
+			</if>
+			<if test="record.juniorDept != null">
+				junior_dept = #{record.juniorDept,jdbcType=VARCHAR},
+			</if>
+			<if test="record.posCategory != null">
+				pos_category = #{record.posCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="record.posName != null">
+				pos_name = #{record.posName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.gender != null">
+				gender = #{record.gender,jdbcType=VARCHAR},
+			</if>
+			<if test="record.email != null">
+				Email = #{record.email,jdbcType=VARCHAR},
+			</if>
+			<if test="record.telephone != null">
+				telephone = #{record.telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.qq != null">
+				qq = #{record.qq,jdbcType=VARCHAR},
+			</if>
+			<if test="record.address != null">
+				address = #{record.address,jdbcType=VARCHAR},
+			</if>
+			<if test="record.citizenship != null">
+				citizenship = #{record.citizenship,jdbcType=VARCHAR},
+			</if>
+			<if test="record.born != null">
+				born = #{record.born,jdbcType=VARCHAR},
+			</if>
+			<if test="record.birth != null">
+				birth = #{record.birth,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.nationality != null">
+				nationality = #{record.nationality,jdbcType=VARCHAR},
+			</if>
+			<if test="record.religion != null">
+				religion = #{record.religion,jdbcType=VARCHAR},
+			</if>
+			<if test="record.politicsStatus != null">
+				politics_status =
+				#{record.politicsStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="record.identification != null">
+				identification =
+				#{record.identification,jdbcType=VARCHAR},
+			</if>
+			<if test="record.socialInsurance != null">
+				social_insurance =
+				#{record.socialInsurance,jdbcType=VARCHAR},
+			</if>
+			<if test="record.age != null">
+				age = #{record.age,jdbcType=INTEGER},
+			</if>
+			<if test="record.education != null">
+				education = #{record.education,jdbcType=VARCHAR},
+			</if>
+			<if test="record.profession != null">
+				profession = #{record.profession,jdbcType=VARCHAR},
+			</if>
+			<if test="record.standardId != null">
+				standard_id = #{record.standardId,jdbcType=INTEGER},
+			</if>
+			<if test="record.bank != null">
+				bank = #{record.bank,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bankAccount != null">
+				bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="record.characters != null">
+				characters = #{record.characters,jdbcType=VARCHAR},
+			</if>
+			<if test="record.hobby != null">
+				hobby = #{record.hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="record.register != null">
+				register = #{record.register,jdbcType=VARCHAR},
+			</if>
+			<if test="record.registerTime != null">
+				register_time =
+				#{record.registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.imgUrl != null">
+				img_url = #{record.imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.experience != null">
+				experience = #{record.experience,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.notes != null">
+				notes = #{record.notes,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.relationship != null">
+				relationship =
+				#{record.relationship,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update staff
+		set staff_id = #{record.staffId,jdbcType=INTEGER},
+		status =
+		#{record.status,jdbcType=INTEGER},
+		num =
+		#{record.num,jdbcType=VARCHAR},
+		principle_dept =
+		#{record.principleDept,jdbcType=VARCHAR},
+		senior_dept =
+		#{record.seniorDept,jdbcType=VARCHAR},
+		junior_dept =
+		#{record.juniorDept,jdbcType=VARCHAR},
+		pos_category =
+		#{record.posCategory,jdbcType=VARCHAR},
+		pos_name =
+		#{record.posName,jdbcType=VARCHAR},
+		name =
+		#{record.name,jdbcType=VARCHAR},
+		gender =
+		#{record.gender,jdbcType=VARCHAR},
+		Email =
+		#{record.email,jdbcType=VARCHAR},
+		telephone =
+		#{record.telephone,jdbcType=VARCHAR},
+		qq =
+		#{record.qq,jdbcType=VARCHAR},
+		address =
+		#{record.address,jdbcType=VARCHAR},
+		citizenship =
+		#{record.citizenship,jdbcType=VARCHAR},
+		born =
+		#{record.born,jdbcType=VARCHAR},
+		birth =
+		#{record.birth,jdbcType=TIMESTAMP},
+		nationality =
+		#{record.nationality,jdbcType=VARCHAR},
+		religion =
+		#{record.religion,jdbcType=VARCHAR},
+		politics_status =
+		#{record.politicsStatus,jdbcType=VARCHAR},
+		identification =
+		#{record.identification,jdbcType=VARCHAR},
+		social_insurance =
+		#{record.socialInsurance,jdbcType=VARCHAR},
+		age =
+		#{record.age,jdbcType=INTEGER},
+		education =
+		#{record.education,jdbcType=VARCHAR},
+		profession =
+		#{record.profession,jdbcType=VARCHAR},
+		standard_id =
+		#{record.standardId,jdbcType=INTEGER},
+		bank =
+		#{record.bank,jdbcType=VARCHAR},
+		bank_account =
+		#{record.bankAccount,jdbcType=VARCHAR},
+		characters =
+		#{record.characters,jdbcType=VARCHAR},
+		hobby =
+		#{record.hobby,jdbcType=VARCHAR},
+		register =
+		#{record.register,jdbcType=VARCHAR},
+		register_time =
+		#{record.registerTime,jdbcType=TIMESTAMP},
+		img_url =
+		#{record.imgUrl,jdbcType=VARCHAR},
+		experience =
+		#{record.experience,jdbcType=LONGVARCHAR},
+		notes =
+		#{record.notes,jdbcType=LONGVARCHAR},
+		relationship =
+		#{record.relationship,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update staff
+		set staff_id = #{record.staffId,jdbcType=INTEGER},
+		status =
+		#{record.status,jdbcType=INTEGER},
+		num =
+		#{record.num,jdbcType=VARCHAR},
+		principle_dept =
+		#{record.principleDept,jdbcType=VARCHAR},
+		senior_dept =
+		#{record.seniorDept,jdbcType=VARCHAR},
+		junior_dept =
+		#{record.juniorDept,jdbcType=VARCHAR},
+		pos_category =
+		#{record.posCategory,jdbcType=VARCHAR},
+		pos_name =
+		#{record.posName,jdbcType=VARCHAR},
+		name =
+		#{record.name,jdbcType=VARCHAR},
+		gender =
+		#{record.gender,jdbcType=VARCHAR},
+		Email =
+		#{record.email,jdbcType=VARCHAR},
+		telephone =
+		#{record.telephone,jdbcType=VARCHAR},
+		qq =
+		#{record.qq,jdbcType=VARCHAR},
+		address =
+		#{record.address,jdbcType=VARCHAR},
+		citizenship =
+		#{record.citizenship,jdbcType=VARCHAR},
+		born =
+		#{record.born,jdbcType=VARCHAR},
+		birth =
+		#{record.birth,jdbcType=TIMESTAMP},
+		nationality =
+		#{record.nationality,jdbcType=VARCHAR},
+		religion =
+		#{record.religion,jdbcType=VARCHAR},
+		politics_status =
+		#{record.politicsStatus,jdbcType=VARCHAR},
+		identification =
+		#{record.identification,jdbcType=VARCHAR},
+		social_insurance =
+		#{record.socialInsurance,jdbcType=VARCHAR},
+		age =
+		#{record.age,jdbcType=INTEGER},
+		education =
+		#{record.education,jdbcType=VARCHAR},
+		profession =
+		#{record.profession,jdbcType=VARCHAR},
+		standard_id =
+		#{record.standardId,jdbcType=INTEGER},
+		bank =
+		#{record.bank,jdbcType=VARCHAR},
+		bank_account =
+		#{record.bankAccount,jdbcType=VARCHAR},
+		characters =
+		#{record.characters,jdbcType=VARCHAR},
+		hobby =
+		#{record.hobby,jdbcType=VARCHAR},
+		register =
+		#{record.register,jdbcType=VARCHAR},
+		register_time =
+		#{record.registerTime,jdbcType=TIMESTAMP},
+		img_url =
+		#{record.imgUrl,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.lewis.pojo.StaffWithBLOBs">
+		update staff
+		<set>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=VARCHAR},
+			</if>
+			<if test="principleDept != null">
+				principle_dept = #{principleDept,jdbcType=VARCHAR},
+			</if>
+			<if test="seniorDept != null">
+				senior_dept = #{seniorDept,jdbcType=VARCHAR},
+			</if>
+			<if test="juniorDept != null">
+				junior_dept = #{juniorDept,jdbcType=VARCHAR},
+			</if>
+			<if test="posCategory != null">
+				pos_category = #{posCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="posName != null">
+				pos_name = #{posName,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				gender = #{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				Email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null">
+				qq = #{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="citizenship != null">
+				citizenship = #{citizenship,jdbcType=VARCHAR},
+			</if>
+			<if test="born != null">
+				born = #{born,jdbcType=VARCHAR},
+			</if>
+			<if test="birth != null">
+				birth = #{birth,jdbcType=TIMESTAMP},
+			</if>
+			<if test="nationality != null">
+				nationality = #{nationality,jdbcType=VARCHAR},
+			</if>
+			<if test="religion != null">
+				religion = #{religion,jdbcType=VARCHAR},
+			</if>
+			<if test="politicsStatus != null">
+				politics_status = #{politicsStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="identification != null">
+				identification = #{identification,jdbcType=VARCHAR},
+			</if>
+			<if test="socialInsurance != null">
+				social_insurance = #{socialInsurance,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				age = #{age,jdbcType=INTEGER},
+			</if>
+			<if test="education != null">
+				education = #{education,jdbcType=VARCHAR},
+			</if>
+			<if test="profession != null">
+				profession = #{profession,jdbcType=VARCHAR},
+			</if>
+			<if test="standardId != null">
+				standard_id = #{standardId,jdbcType=INTEGER},
+			</if>
+			<if test="bank != null">
+				bank = #{bank,jdbcType=VARCHAR},
+			</if>
+			<if test="bankAccount != null">
+				bank_account = #{bankAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="characters != null">
+				characters = #{characters,jdbcType=VARCHAR},
+			</if>
+			<if test="hobby != null">
+				hobby = #{hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="register != null">
+				register = #{register,jdbcType=VARCHAR},
+			</if>
+			<if test="registerTime != null">
+				register_time = #{registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="experience != null">
+				experience = #{experience,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="notes != null">
+				notes = #{notes,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="relationship != null">
+				relationship = #{relationship,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where staff_id = #{staffId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lewis.pojo.StaffWithBLOBs">
+		update
+		staff
+		set status = #{status,jdbcType=INTEGER},
+		num =
+		#{num,jdbcType=VARCHAR},
+		principle_dept =
+		#{principleDept,jdbcType=VARCHAR},
+		senior_dept =
+		#{seniorDept,jdbcType=VARCHAR},
+		junior_dept =
+		#{juniorDept,jdbcType=VARCHAR},
+		pos_category =
+		#{posCategory,jdbcType=VARCHAR},
+		pos_name =
+		#{posName,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		gender =
+		#{gender,jdbcType=VARCHAR},
+		Email = #{email,jdbcType=VARCHAR},
+		telephone = #{telephone,jdbcType=VARCHAR},
+		qq = #{qq,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		citizenship =
+		#{citizenship,jdbcType=VARCHAR},
+		born = #{born,jdbcType=VARCHAR},
+		birth
+		= #{birth,jdbcType=TIMESTAMP},
+		nationality =
+		#{nationality,jdbcType=VARCHAR},
+		religion =
+		#{religion,jdbcType=VARCHAR},
+		politics_status =
+		#{politicsStatus,jdbcType=VARCHAR},
+		identification =
+		#{identification,jdbcType=VARCHAR},
+		social_insurance =
+		#{socialInsurance,jdbcType=VARCHAR},
+		age = #{age,jdbcType=INTEGER},
+		education = #{education,jdbcType=VARCHAR},
+		profession =
+		#{profession,jdbcType=VARCHAR},
+		standard_id =
+		#{standardId,jdbcType=INTEGER},
+		bank = #{bank,jdbcType=VARCHAR},
+		bank_account = #{bankAccount,jdbcType=VARCHAR},
+		characters =
+		#{characters,jdbcType=VARCHAR},
+		hobby = #{hobby,jdbcType=VARCHAR},
+		register = #{register,jdbcType=VARCHAR},
+		register_time =
+		#{registerTime,jdbcType=TIMESTAMP},
+		img_url =
+		#{imgUrl,jdbcType=VARCHAR},
+		experience =
+		#{experience,jdbcType=LONGVARCHAR},
+		notes =
+		#{notes,jdbcType=LONGVARCHAR},
+		relationship =
+		#{relationship,jdbcType=LONGVARCHAR}
+		where staff_id =
+		#{staffId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.lewis.pojo.Staff">
+		update staff
+		set
+		status = #{status,jdbcType=INTEGER},
+		num = #{num,jdbcType=VARCHAR},
+		principle_dept = #{principleDept,jdbcType=VARCHAR},
+		senior_dept =
+		#{seniorDept,jdbcType=VARCHAR},
+		junior_dept =
+		#{juniorDept,jdbcType=VARCHAR},
+		pos_category =
+		#{posCategory,jdbcType=VARCHAR},
+		pos_name =
+		#{posName,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		gender =
+		#{gender,jdbcType=VARCHAR},
+		Email = #{email,jdbcType=VARCHAR},
+		telephone = #{telephone,jdbcType=VARCHAR},
+		qq = #{qq,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		citizenship =
+		#{citizenship,jdbcType=VARCHAR},
+		born = #{born,jdbcType=VARCHAR},
+		birth
+		= #{birth,jdbcType=TIMESTAMP},
+		nationality =
+		#{nationality,jdbcType=VARCHAR},
+		religion =
+		#{religion,jdbcType=VARCHAR},
+		politics_status =
+		#{politicsStatus,jdbcType=VARCHAR},
+		identification =
+		#{identification,jdbcType=VARCHAR},
+		social_insurance =
+		#{socialInsurance,jdbcType=VARCHAR},
+		age = #{age,jdbcType=INTEGER},
+		education = #{education,jdbcType=VARCHAR},
+		profession =
+		#{profession,jdbcType=VARCHAR},
+		standard_id =
+		#{standardId,jdbcType=INTEGER},
+		bank = #{bank,jdbcType=VARCHAR},
+		bank_account = #{bankAccount,jdbcType=VARCHAR},
+		characters =
+		#{characters,jdbcType=VARCHAR},
+		hobby = #{hobby,jdbcType=VARCHAR},
+		register = #{register,jdbcType=VARCHAR},
+		register_time =
+		#{registerTime,jdbcType=TIMESTAMP},
+		img_url =
+		#{imgUrl,jdbcType=VARCHAR}
+		where staff_id = #{staffId,jdbcType=INTEGER}
+	</update>
+
+	<update id="deleteStaffById" parameterType="Integer">
+
+		update staff set
+		status = 2 where staff_id = #{staffId} and status != 0
+
+	</update>
+
+	<resultMap type="com.lewis.pojo.SalaryOrder" id="SalaryOrderMap">
+		<id column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="principle_dept" property="principleDept"
+			jdbcType="VARCHAR" />
+		<result column="senior_dept" property="seniorDept" jdbcType="VARCHAR" />
+		<result column="junior_dept" property="juniorDept" jdbcType="VARCHAR" />
+		<result column="COUNT(*)" property="people" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="groupByJuniorDept" resultMap="SalaryOrderMap">
+		SELECT
+		principle_dept,senior_dept,junior_dept,COUNT(*) from staff GROUP BY
+		junior_dept
+	</select>
+
+	<resultMap type="com.lewis.pojo.StaffExt" id="staffAndDetailsMap">
+		<result column="name" property="name" />
+		<result column="num" property="num" />
+		<result column="standard_id" property="standardId" />
+		<result column="staff_id" property="staffId" />
+		<collection property="details" ofType="com.lewis.pojo.SalaryDetail">
+			<id column="sdetail_id" property="sdetailId" />
+			<result column="item" property="item" />
+			<result column="salary" property="salary" />
+		</collection>
+	</resultMap>
+	<select id="selectStaffAndDetails" parameterType="java.lang.String"
+		resultMap="staffAndDetailsMap">
+		SELECT
+		staff.staff_id,staff.`name`,staff.num,salary_standard.standard_id,salary_detail.item,salary_detail.salary,salary_detail.sdetail_id
+		FROM staff,salary_standard,salary_detail
+		WHERE
+		staff.standard_id=salary_standard.standard_id AND
+		salary_standard.standard_id = salary_detail.standard_id
+		AND
+		staff.junior_dept=#{junior}
+	</select>
+
+
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lewis.mapper.SalaryDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.lewis.pojo.SalaryDetail" >
+    <id column="sdetail_id" property="sdetailId" jdbcType="INTEGER" />
+    <result column="standard_id" property="standardId" jdbcType="INTEGER" />
+    <result column="item" property="item" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sdetail_id, standard_id, item, salary
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lewis.pojo.SalaryDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from salary_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from salary_detail
+    where sdetail_id = #{sdetailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from salary_detail
+    where sdetail_id = #{sdetailId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lewis.pojo.SalaryDetailExample" >
+    delete from salary_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lewis.pojo.SalaryDetail" >
+    insert into salary_detail (sdetail_id, standard_id, item, 
+      salary)
+    values (#{sdetailId,jdbcType=INTEGER}, #{standardId,jdbcType=INTEGER}, #{item,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lewis.pojo.SalaryDetail" >
+    insert into salary_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sdetailId != null" >
+        sdetail_id,
+      </if>
+      <if test="standardId != null" >
+        standard_id,
+      </if>
+      <if test="item != null" >
+        item,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sdetailId != null" >
+        #{sdetailId,jdbcType=INTEGER},
+      </if>
+      <if test="standardId != null" >
+        #{standardId,jdbcType=INTEGER},
+      </if>
+      <if test="item != null" >
+        #{item,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lewis.pojo.SalaryDetailExample" resultType="java.lang.Integer" >
+    select count(*) from salary_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update salary_detail
+    <set >
+      <if test="record.sdetailId != null" >
+        sdetail_id = #{record.sdetailId,jdbcType=INTEGER},
+      </if>
+      <if test="record.standardId != null" >
+        standard_id = #{record.standardId,jdbcType=INTEGER},
+      </if>
+      <if test="record.item != null" >
+        item = #{record.item,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null" >
+        salary = #{record.salary,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update salary_detail
+    set sdetail_id = #{record.sdetailId,jdbcType=INTEGER},
+      standard_id = #{record.standardId,jdbcType=INTEGER},
+      item = #{record.item,jdbcType=VARCHAR},
+      salary = #{record.salary,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lewis.pojo.SalaryDetail" >
+    update salary_detail
+    <set >
+      <if test="standardId != null" >
+        standard_id = #{standardId,jdbcType=INTEGER},
+      </if>
+      <if test="item != null" >
+        item = #{item,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        salary = #{salary,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where sdetail_id = #{sdetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lewis.pojo.SalaryDetail" >
+    update salary_detail
+    set standard_id = #{standardId,jdbcType=INTEGER},
+      item = #{item,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=DOUBLE}
+    where sdetail_id = #{sdetailId,jdbcType=INTEGER}
+  </update>
+</mapper>

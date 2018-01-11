@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 加载jdbc属性文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+	<!-- 数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<!-- 配置shirofilter -->
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 注入安全管理器 -->
+		<property name="securityManager" ref="securityManager"></property>
+		<!-- 注入当前系统的登录页面 -->
+		<property name="loginUrl" value="/login.jsp" />
+		<!-- 注入成功页面 -->
+		<property name="successUrl" value="jsp/home.jsp" />
+		<!-- 注入权限不足提示页面 -->
+		<property name="unauthorizedUrl" value="/unauthorizedUrl.jsp" />
+		<property name="filterChainDefinitions">
+			<value>
+				/jsp/login.jsp =anon
+				/login=anon
+				/login.jsp=anon
+				/jsp/** =authc
+			</value>
+		</property>
+	</bean>
+
+	<bean id="myRealm" class="com.lewis.realm.MyRealm"></bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="myRealm" />
+	</bean>
+
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 加载mybatis的全局配置文件 -->
+		<property name="configLocation" value="classpath:SqlMapConfig.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lewis.mapper" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<context:component-scan base-package="com.lewis.realm"></context:component-scan>
+	<context:component-scan base-package="com.lewis.dao"></context:component-scan>
+	<context:component-scan base-package="com.lewis.service"></context:component-scan>
+
+
+
+	<!-- 开启shiro注解 <bean id="defaultAdvisorAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"> 
+		<property name="proxyTargetClass" value="true"></property> </bean> <bean 
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"></bean> -->
+</beans>

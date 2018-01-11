@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lewis.mapper.SalaryQueryMapper">
+	<resultMap id="BaseResultMap" type="com.lewis.pojo.SalaryStandard">
+		<id column="standard_id" property="standardId" jdbcType="INTEGER" />
+		<result column="num" property="num" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="compiler" property="compiler" jdbcType="VARCHAR" />
+		<result column="register" property="register" jdbcType="VARCHAR" />
+		<result column="register_time" property="registerTime"
+			jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="BIT" />
+	</resultMap>
+	<select id="selectByConditions" parameterType="com.lewis.webmodel.SalaryQuery"
+		resultMap="BaseResultMap">
+		select * from salary_standard
+		<where>
+			status = false
+			<if test="salaryNum!=null and salaryNum!=''">
+				and num=#{salaryNum}
+			</if>
+			<if test="keyword!=null and keyword!=''">
+				and (compiler=#{keyword}
+				or register=#{keyword}
+				)
+			</if>
+			<if test="fromRegisterTime!=null">
+				and register_time &gt; #{fromRegisterTime}
+			</if>
+			<if test="toRegisterTime!=null">
+				and register_time &lt; #{toRegisterTime}
+			</if>
+
+		</where>
+	</select>
+
+</mapper>

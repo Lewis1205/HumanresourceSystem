@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lewis.mapper.SalaryStandardMapper">
+	<resultMap id="BaseResultMap" type="com.lewis.pojo.SalaryStandard">
+		<id column="standard_id" property="standardId" jdbcType="INTEGER" />
+		<result column="totalsalary" property="totalsalary" jdbcType="DOUBLE" />
+		<result column="num" property="num" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="compiler" property="compiler" jdbcType="VARCHAR" />
+		<result column="register" property="register" jdbcType="VARCHAR" />
+		<result column="register_time" property="registerTime"
+			jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="BIT" />
+		<result column="comment" property="comment" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		standard_id, totalsalary, num, name, compiler, register,
+		register_time, status,
+		comment
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.lewis.pojo.SalaryStandardExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from salary_standard
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from salary_standard
+		where standard_id = #{standardId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		salary_standard
+		where standard_id = #{standardId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.lewis.pojo.SalaryStandardExample">
+		delete from salary_standard
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.lewis.pojo.SalaryStandard">
+		<selectKey keyProperty="standardId" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into salary_standard (standard_id, totalsalary, num,
+		name,
+		compiler, register,
+		register_time, status, comment
+		)
+		values
+		(#{standardId,jdbcType=INTEGER}, #{totalsalary,jdbcType=DOUBLE},
+		#{num,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{compiler,jdbcType=VARCHAR}, #{register,jdbcType=VARCHAR},
+		#{registerTime,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT},
+		#{comment,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.lewis.pojo.SalaryStandard">
+		insert into salary_standard
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="standardId != null">
+				standard_id,
+			</if>
+			<if test="totalsalary != null">
+				totalsalary,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="compiler != null">
+				compiler,
+			</if>
+			<if test="register != null">
+				register,
+			</if>
+			<if test="registerTime != null">
+				register_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="standardId != null">
+				#{standardId,jdbcType=INTEGER},
+			</if>
+			<if test="totalsalary != null">
+				#{totalsalary,jdbcType=DOUBLE},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="compiler != null">
+				#{compiler,jdbcType=VARCHAR},
+			</if>
+			<if test="register != null">
+				#{register,jdbcType=VARCHAR},
+			</if>
+			<if test="registerTime != null">
+				#{registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=BIT},
+			</if>
+			<if test="comment != null">
+				#{comment,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.lewis.pojo.SalaryStandardExample"
+		resultType="java.lang.Integer">
+		select count(*) from salary_standard
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update salary_standard
+		<set>
+			<if test="record.standardId != null">
+				standard_id = #{record.standardId,jdbcType=INTEGER},
+			</if>
+			<if test="record.totalsalary != null">
+				totalsalary = #{record.totalsalary,jdbcType=DOUBLE},
+			</if>
+			<if test="record.num != null">
+				num = #{record.num,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.compiler != null">
+				compiler = #{record.compiler,jdbcType=VARCHAR},
+			</if>
+			<if test="record.register != null">
+				register = #{record.register,jdbcType=VARCHAR},
+			</if>
+			<if test="record.registerTime != null">
+				register_time =
+				#{record.registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=BIT},
+			</if>
+			<if test="record.comment != null">
+				comment = #{record.comment,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update salary_standard
+		set standard_id =
+		#{record.standardId,jdbcType=INTEGER},
+		totalsalary =
+		#{record.totalsalary,jdbcType=DOUBLE},
+		num =
+		#{record.num,jdbcType=VARCHAR},
+		name = #{record.name,jdbcType=VARCHAR},
+		compiler = #{record.compiler,jdbcType=VARCHAR},
+		register =
+		#{record.register,jdbcType=VARCHAR},
+		register_time =
+		#{record.registerTime,jdbcType=TIMESTAMP},
+		status =
+		#{record.status,jdbcType=BIT},
+		comment =
+		#{record.comment,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.lewis.pojo.SalaryStandard">
+		update salary_standard
+		<set>
+			<if test="totalsalary != null">
+				totalsalary = #{totalsalary,jdbcType=DOUBLE},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="compiler != null">
+				compiler = #{compiler,jdbcType=VARCHAR},
+			</if>
+			<if test="register != null">
+				register = #{register,jdbcType=VARCHAR},
+			</if>
+			<if test="registerTime != null">
+				register_time = #{registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=BIT},
+			</if>
+			<if test="comment != null">
+				comment = #{comment,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where standard_id = #{standardId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.lewis.pojo.SalaryStandard">
+		update
+		salary_standard
+		set totalsalary = #{totalsalary,jdbcType=DOUBLE},
+		num =
+		#{num,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		compiler =
+		#{compiler,jdbcType=VARCHAR},
+		register = #{register,jdbcType=VARCHAR},
+		register_time = #{registerTime,jdbcType=TIMESTAMP},
+		status =
+		#{status,jdbcType=BIT},
+		comment = #{comment,jdbcType=VARCHAR}
+		where
+		standard_id = #{standardId,jdbcType=INTEGER}
+	</update>
+</mapper>
